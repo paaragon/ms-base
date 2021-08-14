@@ -52,7 +52,7 @@ The logs will be shown in the console as in the log files. There are two log fil
 
 ### Log colors
 
-You can set colors in your logs (only seen in the console not in the files) thanks to [colors](https://www.npmjs.com/package/colors). You will se that when I use colors in the examples, I write a useless instruction (`colors.green;`). This is because my IDE removes the import line if I don't use it.
+You can set colors in your logs (only seen in the console not in the files) thanks to [colors](https://www.npmjs.com/package/colors). You will see that when I use colors in the examples, I write a useless instruction (`colors.green;`). This is because my IDE removes the import lines I don't use.
 
 Here you have an example of how to put colors in the logs:
 
@@ -70,7 +70,7 @@ This microservice uses winston to manage logs so you can specify a name that wil
 Here is an example of how to use it:
 
 ```
-import {logger} from './lib/logger' // set the correct route for your file
+import { logger } from './lib/logger' // set the correct route for your file
 
 const log = logger.child({name: 'my_file.ts'}); // you can specify any name you want. I like to set the file name
 
