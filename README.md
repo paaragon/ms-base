@@ -35,7 +35,7 @@ This is an example microservice which can be used as code base for any Typescrip
       - Add the router to the express app in `src/api/server.ts` (look at the examples lines in the file).
 4. To test your application locally: `npm run start:dev`. 
 
-# Scripts
+## Scripts
 
 - `npm run build`: builds the app. The result files will be places in the `dist` folder.
 - `npm start`: starts the previous built in `dist`.
