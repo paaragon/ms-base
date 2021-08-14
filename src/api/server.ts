@@ -38,6 +38,7 @@ export default class Server {
     private initRoutes() {
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/example`, exampleRoutes);
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/db/example`, exampledbRoutes);
+        /** add your routes here (use the lines above as examples) */
     }
 
     start() {
