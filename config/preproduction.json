@@ -8,5 +8,8 @@
     },
     "log": {
         "level": "info"
+    },
+    "db": {
+        "location": "./data/db.sq3"
     }
 }
