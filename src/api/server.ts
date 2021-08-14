@@ -1,0 +1,48 @@
+import config from 'config';
+import cors from 'cors';
+import express, { RequestHandler } from 'express';
+import httpContext from 'express-http-context';
+import customExpress, { CustomExpress } from '../lib/customExpress';
+import { logger } from '../lib/logger';
+import { ConfigApiI } from '../models/ConfigI';
+import accessLogger from './mdw/accessLogger';
+import errorHandler from './mdw/errorHandler';
+import requestUuid from './mdw/requestUuid';
+import exampleRoutes from './routes/example.routes';
+import exampledbRoutes from './routes/exampledb.routes';
+
+const log = logger.child({ name: 'server.ts' });
+
+export default class Server {
+    private app: CustomExpress;
+
+    constructor(
+        public port: number,
+    ) {
+
+        this.app = customExpress(express());
+
+        this.app.use(cors({
+            origin: true, // reflect (enable) the requested origin in the CORS response
+            credentials: true
+        }));
+        this.app.use(express.json() as RequestHandler);
+        this.app.use(httpContext.middleware);
+        this.app.use(requestUuid);
+        this.app.use(accessLogger);
+        this.initRoutes();
+        this.app.printEndpoints();
+        this.app.use(errorHandler);
+    }
+
+    private initRoutes() {
+        this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/example`, exampleRoutes);
+        this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/db/example`, exampledbRoutes);
+    }
+
+    start() {
+        this.app.listen(this.port, () => {
+            log.info(`App is listening on port ${this.port}`);
+        });
+    }
+}

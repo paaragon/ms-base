@@ -1,0 +1,15 @@
+{
+    "api": {
+        "version": 1,
+        "port": 3000,
+        "security": {
+            "admin": "admin"
+        }
+    },
+    "log": {
+        "level": "warn"
+    },
+    "db": {
+        "location": "./data/db.sq3"
+    }
+}
