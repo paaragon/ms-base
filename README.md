@@ -23,7 +23,7 @@ This is an example microservice which can be used as code base for any Typescrip
 - Debug configuration for VS Code
 - NPM scrips to live reload and build
 
-# How to start
+## How to start
 
 1. Istall dependencies with `npm install`.
 2. Configure your database connection by tweaking your config file and `db/dbconnection.ts`. If you don't want any db connection, remove the following files and lines:
@@ -42,15 +42,15 @@ This is an example microservice which can be used as code base for any Typescrip
 - `npm run start:dev`: starts the app by executing the Typescript files directly. It also reload the app when you make a change in the code.
 - `npm run test`: the script exists, but it only gives an error. In the future I mitght provide some test examples.
 
-# Logs
+## Logs
 
 This microservice has a very cool log system. It shows two different logs:
 - Access logs: prints a line for each api request.
 - Normal log: it prints everything you send to the log.
 
-The logs will be shown in the console as in the log files. There are two log files: one for access logs and another for everithing.
+The logs will be shown in the console as in the log files. There are two log files: one for access logs and another for everything.
 
-## Log colors
+### Log colors
 
 You can set colors in your logs (only seen in the console not in the files) thanks to [colors](https://www.npmjs.com/package/colors). You will se that when I use colors in the examples, I write a useless instruction (`colors.green;`). This is because my IDE removes the import line if I don't use it.
 
@@ -63,7 +63,7 @@ color.green; // useless instruction just to avoid import deletion
 log.info('Hello world!'.green);
 ```
 
-## Log namespace
+### Log namespace
 
 This microservice uses winston to manage logs so you can specify a name that will be printed in the log trace. Is very useful to know what file is printing the log.
 
