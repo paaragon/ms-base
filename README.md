@@ -41,3 +41,44 @@ This is an example microservice which can be used as code base for any Typescrip
 - `npm start`: starts the previous built in `dist`.
 - `npm run start:dev`: starts the app by executing the Typescript files directly. It also reload the app when you make a change in the code.
 - `npm run test`: the script exists, but it only gives an error. In the future I mitght provide some test examples.
+
+# Logs
+
+This microservice has a very cool log system. It shows two different logs:
+- Access logs: prints a line for each api request.
+- Normal log: it prints everything you send to the log.
+
+The logs will be shown in the console as in the log files. There are two log files: one for access logs and another for everithing.
+
+## Log colors
+
+You can set colors in your logs (only seen in the console not in the files) thanks to [colors](https://www.npmjs.com/package/colors). You will se that when I use colors in the examples, I write a useless instruction (`colors.green;`). This is because my IDE removes the import line if I don't use it.
+
+Here you have an example of how to put colors in the logs:
+
+```
+import * as colors from 'colors';
+color.green; // useless instruction just to avoid import deletion
+
+log.info('Hello world!'.green);
+```
+
+## Log namespace
+
+This microservice uses winston to manage logs so you can specify a name that will be printed in the log trace. Is very useful to know what file is printing the log.
+
+Here is an example of how to use it:
+
+```
+import {logger} from './lib/logger' // set the correct route for your file
+
+const log = logger.child({name: 'my_file.ts'}); // you can specify any name you want. I like to set the file name
+
+log.info('Hello world!');
+```
+
+That will output:
+
+```
+2021-08-14 04:23:22+00:00 [info]  [my_file.ts] Hello world!
+```
