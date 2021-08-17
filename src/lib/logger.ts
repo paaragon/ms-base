@@ -10,7 +10,7 @@ colors.green;
 
 
 const { printf } = winston.format;
-const tsFormat = () => moment.utc().format('YYYY-MM-DD hh:mm:ssZ').trim();
+const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
 
 const logFolder = process.env.LOG_FOLDER_PATH || './logs';
 
