@@ -3,7 +3,7 @@ import Example from '../../models/example.model';
 import exampleService from '../../services/example.service';
 
 export default {
-  getExample: async (req: Request, res: Response, next: NextFunction) => {
+  async getExample(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  addExample: async (req: Request, res: Response, next: NextFunction) => {
+  async addExample(req: Request, res: Response, next: NextFunction) {
     try {
       const { id, title, body } = req.body;
 
