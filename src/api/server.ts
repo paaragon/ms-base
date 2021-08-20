@@ -31,7 +31,6 @@ export default class Server {
         this.app.use(requestUuid);
         this.app.use(accessLogger);
         this.initRoutes();
-        this.app.printEndpoints();
         this.app.use(errorHandler);
     }
 
@@ -41,9 +40,13 @@ export default class Server {
         /** add your routes here (use the lines above as examples) */
     }
 
-    start() {
-        this.app.listen(this.port, () => {
-            log.info(`App is listening on port ${this.port}`);
+    async start() {
+        return new Promise<void>((res, rej) => {
+            this.app.listen(this.port, () => {
+                this.app.printEndpoints();
+                log.info(`Server is listening on port ${this.port}`);
+                res();
+            });
         });
     }
 }

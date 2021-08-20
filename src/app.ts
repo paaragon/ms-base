@@ -28,7 +28,7 @@ log.info('Starting app...');
 
     log.info('Starting server...');
     const server = new Server(port);
-    server.start();
+    await server.start();
     log.info('Server started');
 
     log.info('application started');
