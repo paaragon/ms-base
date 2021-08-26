@@ -8,15 +8,18 @@ import 'winston-daily-rotate-file';
 import { ConfigLogI } from '../models/ConfigI';
 colors.green;
 
-
 const { printf } = winston.format;
 const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
 
 const logFolder = process.env.LOG_FOLDER_PATH || './logs';
 
 const logString = (str: string, info: TransformableInfo): string => {
+    if (httpContext.get('starttime')) {
+        const time = formatTime(new Date().getTime() - httpContext.get('starttime'));
+        str += `[${time.padStart(7, ' ')}] `;
+    }
     if (info.level) {
-        str += mapLevelColor(info.level, `[${info.level}] `.padEnd(8, ' '));
+        str += mapLevelColor(info.level, `[${info.level.padEnd(7, ' ')}] `);
     }
     if (info.name) {
         str += `[${info.name}] `.green;
@@ -94,5 +97,13 @@ function mapLevelColor(level: string, str: string) {
         return str.grey;
     } else {
         return str;
+    }
+}
+
+function formatTime(time: number): string {
+    if (time > 1000) {
+        return `+${Math.round(time/10) / 100}s`;
+    }else{
+        return `+${time}ms`;
     }
 }

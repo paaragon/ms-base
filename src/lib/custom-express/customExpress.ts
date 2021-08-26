@@ -1,25 +1,32 @@
 import Table from 'cli-table';
+import express from 'express';
 import * as core from 'express-serve-static-core';
-import { logger } from '../lib/logger';
+import { logger } from '../logger';
+import swaggerBuilder from './swagger/swagger-builder';
+import SwaggerConfig from './swagger/swagger-user-config';
 
 const log = logger.child({ name: 'server.ts' });
 
-type Endpoint = { method: string, path: string };
+export type Endpoint = { method: string, path: string };
 
-// this is just express but with printEndpoints function
+// this is just express but with fancy functionality
 export interface CustomExpress extends core.Express {
-    printEndpoints: Function
+    endpoints: Endpoint[];
+    printEndpoints: () => void,
+    swaggerConfig: (config: SwaggerConfig) => void,
 };
 
-export default function (app: core.Express): CustomExpress {
-    const customApp: CustomExpress = app as CustomExpress;
+export default function (): CustomExpress {
+    
+    const customApp: CustomExpress = express() as CustomExpress;
     customApp.printEndpoints = printEndpoints;
     customApp.use = attatchEndpointsLogger(customApp, customApp.use);
+    customApp.swaggerConfig = (config: SwaggerConfig) => swaggerBuilder.build(customApp, config);
 
     return customApp;
 }
 
-function attatchEndpointsLogger(topApp: any, fn: Function) {
+function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
     return function withLogic(this: any) {
         var res = fn.apply(this, arguments);
         for (const arg of Array.from(arguments)) {

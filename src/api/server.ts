@@ -2,7 +2,7 @@ import config from 'config';
 import cors from 'cors';
 import express, { RequestHandler } from 'express';
 import httpContext from 'express-http-context';
-import customExpress, { CustomExpress } from '../lib/customExpress';
+import customExpress, { CustomExpress } from '../lib/custom-express/customExpress';
 import { logger } from '../lib/logger';
 import { ConfigApiI } from '../models/ConfigI';
 import accessLogger from './mdw/accessLogger';
@@ -20,8 +20,7 @@ export default class Server {
         public port: number,
     ) {
 
-        this.app = customExpress(express());
-
+        this.app = customExpress();
         this.app.use(cors({
             origin: true, // reflect (enable) the requested origin in the CORS response
             credentials: true
@@ -31,6 +30,13 @@ export default class Server {
         this.app.use(requestUuid);
         this.app.use(accessLogger);
         this.initRoutes();
+        this.app.swaggerConfig({
+            name: 'ms-base',
+            description: 'Multipurpose microservice template',
+            version: '1.0.0',
+            basePath: '/',
+            schemes: ['http', 'https']
+        });
         this.app.use(errorHandler);
     }
 

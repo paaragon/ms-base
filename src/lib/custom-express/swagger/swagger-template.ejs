@@ -1,0 +1,12 @@
+swagger: '2.0.0'
+info:
+  <% if(config.general.description) { %>description: <%= config.general.description %><% } %>
+  version: <%= config.general.version %>
+  title: <%= config.general.name %>
+  <% if(config.general.host) { %>host: <%= config.general.host %><% } %>
+  <% if(config.general.basePath) { %>basePath: <%= config.general.basePath %><% } %>
+  schemes:
+    <% for(const s of config.general.schemes) { %>- <%= s %><% } %>
+<% if (config.paths) { %>paths:<% for(const path of config.paths) { %>
+  <%= path %><% } %>
+<% } %>

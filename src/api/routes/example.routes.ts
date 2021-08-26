@@ -1,10 +1,10 @@
-import express from 'express';
-import { body, param } from 'express-validator';
+    import { body, param } from 'express-validator';
+import customExpress from '../../lib/custom-express/customExpress';
 import exampleCtrl from '../controllers/example.ctrl';
 import authCheck from '../mdw/authCheck';
 import validateRequest from '../mdw/validateRequest';
 
-const app = express();
+const app = customExpress();
 
 app.get('/:id',
     authCheck, [
@@ -17,5 +17,10 @@ app.post('/',
     body('title').isString(),
     body('body').isString(),
 ], validateRequest, exampleCtrl.addExample);
+
+app.get('/slow/:id',
+authCheck, [
+    param('id').isNumeric(),
+], validateRequest, exampleCtrl.getExampleSlow);
 
 export default app;

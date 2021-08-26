@@ -1,10 +1,10 @@
-import express from 'express';
 import { body, param } from 'express-validator';
+import customExpress from '../../lib/custom-express/customExpress';
 import exampledbCtrl from '../controllers/exampledb.ctrl';
 import authCheck from '../mdw/authCheck';
 import validateRequest from '../mdw/validateRequest';
 
-const app = express();
+const app = customExpress();
 
 app.get('/:id',
     authCheck, [

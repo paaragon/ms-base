@@ -16,6 +16,21 @@ export default {
     }
   },
 
+  async getExampleSlow(req: Request, res: Response, next: NextFunction) {
+    setTimeout(async () => {
+      try {
+        const { id } = req.params;
+
+        const result: Example = await exampleService.getExample(id);
+
+        return res.json(result);
+
+      } catch (e) {
+        next(e);
+      }
+    }, 10000);
+  },
+
   async addExample(req: Request, res: Response, next: NextFunction) {
     try {
       const { id, title, body } = req.body;
