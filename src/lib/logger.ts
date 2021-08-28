@@ -79,7 +79,6 @@ const logger = winston.createLogger({
 const accessLogger = winston.createLogger({
     format: myFormat,
     transports: [
-        consoleTransport,
         accessDailyTransport,
     ]
 });

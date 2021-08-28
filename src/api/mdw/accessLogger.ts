@@ -26,7 +26,8 @@ function logResponse(req: Request, res: Response, reqDate: Date) {
     const statusCode = res.statusCode;
     const method = req.method;
     const accessLogStr = `${statusCode} ${method.toUpperCase()} ${baseUrl}${url} ${duration}ms`.yellow;
-    log.info(accessLogStr);
+    accessLog.info(`End of request: ${accessLogStr}`);
+    log.info(`End of request: ${accessLogStr}`)
 }
 
 function logRequest(req: Request, res: Response) {
@@ -34,6 +35,6 @@ function logRequest(req: Request, res: Response) {
     const url: string = req.url;
     const method = req.method;
     const accessLogStr = `${method.toUpperCase()} ${baseUrl}${url}`.yellow;
-    accessLog.info(accessLogStr);
-    log.info(`Incoming request ${accessLogStr}`)
+    accessLog.info(`Incoming request: ${accessLogStr}`);
+    log.info(`Incoming request: ${accessLogStr}`)
 }
