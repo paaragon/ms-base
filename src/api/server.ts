@@ -20,7 +20,10 @@ export default class Server {
         public port: number,
     ) {
 
-        this.app = customExpress();
+        const customExpressLog = log.child({ name: 'customExpress' });
+        this.app = customExpress({
+            log: customExpressLog.info.bind(customExpressLog),
+        });
         this.app.use(cors({
             origin: true, // reflect (enable) the requested origin in the CORS response
             credentials: true
@@ -30,13 +33,6 @@ export default class Server {
         this.app.use(requestUuid);
         this.app.use(accessLogger);
         this.initRoutes();
-        this.app.swaggerConfig({
-            name: 'ms-base',
-            description: 'Multipurpose microservice template',
-            version: '1.0.0',
-            basePath: '/',
-            schemes: ['http', 'https']
-        });
         this.app.use(errorHandler);
     }
 

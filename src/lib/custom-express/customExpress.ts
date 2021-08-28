@@ -1,29 +1,28 @@
 import Table from 'cli-table';
 import express from 'express';
 import * as core from 'express-serve-static-core';
-import { logger } from '../logger';
-import swaggerBuilder from './swagger/swagger-builder';
-import SwaggerConfig from './swagger/swagger-user-config';
 
-const log = logger.child({ name: 'server.ts' });
+export default function (config?: CustomExpressConfig): CustomExpress {
+    const customApp: CustomExpress = express() as CustomExpress;
+    customApp.config = {
+        log: config?.log || console.log,
+    }
+    customApp.use = attatchEndpointsLogger(customApp, customApp.use);
+    customApp.printEndpoints = printEndpoints;
 
-export type Endpoint = { method: string, path: string };
+    return customApp;
+}
 
-// this is just express but with fancy functionality
 export interface CustomExpress extends core.Express {
     endpoints: Endpoint[];
     printEndpoints: () => void,
-    swaggerConfig: (config: SwaggerConfig) => void,
+    config: CustomExpressConfig;
 };
 
-export default function (): CustomExpress {
-    
-    const customApp: CustomExpress = express() as CustomExpress;
-    customApp.printEndpoints = printEndpoints;
-    customApp.use = attatchEndpointsLogger(customApp, customApp.use);
-    customApp.swaggerConfig = (config: SwaggerConfig) => swaggerBuilder.build(customApp, config);
+export type Endpoint = { method: string, path: string };
 
-    return customApp;
+export interface CustomExpressConfig {
+    log: (message: string) => void;
 }
 
 function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
@@ -37,7 +36,6 @@ function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
         return res;
     };
 }
-
 
 function getEndpoints(app: core.Express): Endpoint[] {
     const appPaths: { methods: string[], path: string }[] = app._router.stack
@@ -54,8 +52,8 @@ function getEndpoints(app: core.Express): Endpoint[] {
     return ret;
 }
 
-function printEndpoints(this: any) {
-    log.info('Application endpoints');
+function printEndpoints(this: CustomExpress) {
+    this.config.log('Application endpoints');
     if (!this.endpoints) {
         return;
     }
@@ -79,5 +77,5 @@ function printEndpoints(this: any) {
     });
 
     table.push(...rows);
-    log.info(`\n${table.toString()}`);
+    this.config.log(`\n${table.toString()}`);
 }
