@@ -9,19 +9,12 @@ colors.green;
 const { printf } = winston.format;
 const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
 
-const logFolder = process.env.LOG_FOLDER_PATH || './logs';
-
 export default function (loggerConfig?: LoggerConfig) {
     const printFormat = loggerConfig?.printFormat || defaultPrint;
     const level = loggerConfig?.level || 'info';
-    const datePattern: string = loggerConfig?.file?.datePattern || 'YYYY-MM-DD';
-    const filePath = loggerConfig?.file?.path || `${logFolder}/application-%DATE%.log`;
-    const maxSize: string | number = loggerConfig?.file?.maxSize || '20m';
-    const maxFiles: string | number = loggerConfig?.file?.maxFiles || '14d';
-    const zippedArchive: boolean = loggerConfig?.file?.zippedArchive || true;
+    const filePath = loggerConfig?.file?.path;
 
     const transports = [];
-
 
     if (filePath) {
         const fileFormat = printf((info: TransformableInfo) => {
@@ -29,6 +22,11 @@ export default function (loggerConfig?: LoggerConfig) {
             str = printFormat(str, info);
             return str.replace(/\[[0-9]{2}m/g, '');
         });
+
+        const datePattern: string = loggerConfig?.file?.pathDatePattern || 'YYYY-MM-DD';
+        const maxSize: string | number = loggerConfig?.file?.maxSize || '20m';
+        const maxFiles: string | number = loggerConfig?.file?.maxFiles || '14d';
+        const zippedArchive: boolean = loggerConfig?.file?.zippedArchive || true;
 
         const dailyTransport = new winston.transports.DailyRotateFile({
             filename: filePath,
@@ -39,6 +37,7 @@ export default function (loggerConfig?: LoggerConfig) {
             level,
             format: fileFormat
         });
+
         transports.push(dailyTransport);
     }
 
@@ -67,7 +66,7 @@ export interface LoggerConfig {
         maxSize?: string | number,
         maxFiles?: string | number,
         zippedArchive?: boolean,
-        datePattern?: string,
+        pathDatePattern?: string,
     }
     console?: boolean,
     level?: 'info' | 'error' | 'warn' | 'debug',
