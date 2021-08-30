@@ -1,6 +1,6 @@
 import config from 'config';
 import { ConnectionOptions, createConnection } from 'typeorm';
-import { logger } from '../logger';
+import { logger } from '../logger/logger';
 import { ConfigLogI, ConfigSQLiteI } from '../models/ConfigI';
 
 const dbConfig = config.get<ConfigSQLiteI>('db');

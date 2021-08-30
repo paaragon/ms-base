@@ -1,6 +1,6 @@
 import * as colors from 'colors';
 import { NextFunction, Request, Response } from 'express';
-import { accessLogger, logger } from '../../logger';
+import { accessLogger, logger } from '../../logger/logger';
 colors.green;
 
 const accessLog = accessLogger.child({ name: 'access-logger' });

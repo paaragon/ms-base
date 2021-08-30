@@ -2,7 +2,7 @@ import config from 'config';
 //import 'reflect-metadata';
 import Server from './api/server';
 import dbconnection from './db/dbconnection';
-import { logger } from './logger';
+import { logger } from './logger/logger';
 import { ConfigApiI } from './models/ConfigI';
 require('dotenv').config();
 
