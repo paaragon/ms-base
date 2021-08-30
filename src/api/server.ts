@@ -3,7 +3,7 @@ import cors from 'cors';
 import express, { RequestHandler } from 'express';
 import httpContext from 'express-http-context';
 import customExpress, { CustomExpress } from '../lib/customExpress/customExpress';
-import { logger } from '../lib/logger';
+import { logger } from '../logger';
 import { ConfigApiI } from '../models/ConfigI';
 import accessLogger from './mdw/accessLogger';
 import errorHandler from './mdw/errorHandler';

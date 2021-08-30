@@ -1,6 +1,6 @@
 import config from 'config';
 import { ConnectionOptions, createConnection } from 'typeorm';
-import { logger } from '../lib/logger';
+import { logger } from '../logger';
 import { ConfigLogI, ConfigSQLiteI } from '../models/ConfigI';
 
 const dbConfig = config.get<ConfigSQLiteI>('db');
@@ -21,6 +21,6 @@ const options: ConnectionOptions = {
 export default {
     createConnection: async () => {
         logger.info(`${JSON.stringify(options)}`)
-        const connection = await createConnection(options);
+        await createConnection(options);
     }
 }

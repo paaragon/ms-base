@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { logger } from '../../lib/logger';
+import { logger } from '../../logger';
 import HttpException from '../exceptions/HttpException';
 
 const log = logger.child({ name: 'error-handler' });
