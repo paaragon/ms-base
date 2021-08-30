@@ -2,7 +2,7 @@ import config from 'config';
 import cors from 'cors';
 import express, { RequestHandler } from 'express';
 import httpContext from 'express-http-context';
-import customExpress, { CustomExpress } from '../lib/customExpress';
+import customExpress, { CustomExpress } from '../lib/customExpress/customExpress';
 import { logger } from '../lib/logger';
 import { ConfigApiI } from '../models/ConfigI';
 import accessLogger from './mdw/accessLogger';

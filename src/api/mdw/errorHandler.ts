@@ -1,6 +1,6 @@
-import { NextFunction, Response, Request } from 'express';
-import HttpException from '../exceptions/HttpException';
+import { NextFunction, Request, Response } from 'express';
 import { logger } from '../../lib/logger';
+import HttpException from '../exceptions/HttpException';
 
 const log = logger.child({ name: 'error-handler' });
 
