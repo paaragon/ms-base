@@ -4,6 +4,9 @@ import { TransformableInfo } from 'logform';
 import moment from 'moment';
 import winston from 'winston';
 import 'winston-daily-rotate-file';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import { Console, ConsoleTransportInstance } from 'winston/lib/winston/transports';
+import { LoggerConfig, LoggerFileConfig, LoggerLevel, LoggerPrintFunction } from './myfavouriteloggerI';
 colors.green;
 
 const { printf } = winston.format;
@@ -14,62 +17,60 @@ export default function (loggerConfig?: LoggerConfig) {
     const level = loggerConfig?.level || 'info';
     const filePath = loggerConfig?.file?.path;
 
-    const transports = [];
+    const transports: (DailyRotateFile | ConsoleTransportInstance)[] = [];
 
     if (filePath) {
-        const fileFormat = printf((info: TransformableInfo) => {
-            let str = `${tsFormat()} `;
-            str = printFormat(str, info);
-            return str.replace(/\[[0-9]{2}m/g, '');
-        });
-
-        const datePattern: string = loggerConfig?.file?.pathDatePattern || 'YYYY-MM-DD';
-        const maxSize: string | number = loggerConfig?.file?.maxSize || '20m';
-        const maxFiles: string | number = loggerConfig?.file?.maxFiles || '14d';
-        const zippedArchive: boolean = loggerConfig?.file?.zippedArchive || true;
-
-        const dailyTransport = new winston.transports.DailyRotateFile({
-            filename: filePath,
-            datePattern,
-            zippedArchive,
-            maxSize,
-            maxFiles,
-            level,
-            format: fileFormat
-        });
-
-        transports.push(dailyTransport);
+        transports.push(getDailyFileTransport(level, loggerConfig.file, printFormat));
     }
 
-    const consoleFormat = printf((info: TransformableInfo) => {
-        let str = `${tsFormat()} `;
-        str = printFormat(str, info);
-        return str;
-    });
-
-    const consoleTransport = new winston.transports.Console({
-        level: level,
-        format: consoleFormat,
-    });
-
-    transports.push(consoleTransport);
+    if (loggerConfig.console !== false) {
+        transports.push(getConsoleTransport(level, printFormat));
+    }
 
     const logger = winston.createLogger({ transports });
 
     return logger;
 }
 
-export interface LoggerConfig {
-    printFormat?: (str: string, info: TransformableInfo) => string,
-    file?: {
-        path?: string,
-        maxSize?: string | number,
-        maxFiles?: string | number,
-        zippedArchive?: boolean,
-        pathDatePattern?: string,
-    }
-    console?: boolean,
-    level?: 'info' | 'error' | 'warn' | 'debug',
+function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig, printFormat: LoggerPrintFunction): DailyRotateFile {
+    const fileFormat = printf((info: TransformableInfo) => {
+        let str = `${tsFormat()} `;
+        str = printFormat(str, info);
+        return str.replace(/\[[0-9]{2}m/g, '');
+    });
+
+    const filePath = fileConfig.path;
+    const datePattern: string = fileConfig.pathDatePattern || 'YYYY-MM-DD';
+    const maxSize: string | number = fileConfig.maxSize || '20m';
+    const maxFiles: string | number = fileConfig.maxFiles || '14d';
+    const zippedArchive: boolean = fileConfig.zippedArchive || true;
+
+    const dailyTransport = new DailyRotateFile({
+        filename: filePath,
+        datePattern,
+        zippedArchive,
+        maxSize,
+        maxFiles,
+        level,
+        format: fileFormat
+    });
+
+    return dailyTransport;
+}
+
+function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunction): ConsoleTransportInstance {
+    const consoleFormat = printf((info: TransformableInfo) => {
+        let str = `${tsFormat()} `;
+        str = printFormat(str, info);
+        return str;
+    });
+
+    const consoleTransport = new Console({
+        level: level,
+        format: consoleFormat,
+    });
+
+    return consoleTransport;
 }
 
 function defaultPrint(str: string, info: TransformableInfo): string {

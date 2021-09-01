@@ -1,6 +1,6 @@
 import config from 'config';
 import cors from 'cors';
-import express, { RequestHandler } from 'express';
+import express from 'express';
 import httpContext from 'express-http-context';
 import customExpress, { CustomExpress } from '../lib/customExpress/customExpress';
 import { logger } from '../logger/logger';
@@ -25,10 +25,10 @@ export default class Server {
             log: customExpressLog.info.bind(customExpressLog),
         });
         this.app.use(cors({
-            origin: true, // reflect (enable) the requested origin in the CORS response
+            origin: true,
             credentials: true
         }));
-        this.app.use(express.json() as RequestHandler);
+        this.app.use(express.json());
         this.app.use(httpContext.middleware);
         this.app.use(requestUuid);
         this.app.use(accessLogger);

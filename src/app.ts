@@ -1,5 +1,5 @@
 import config from 'config';
-//import 'reflect-metadata';
+import 'reflect-metadata';
 import Server from './api/server';
 import dbconnection from './db/dbconnection';
 import { logger } from './logger/logger';
@@ -16,6 +16,7 @@ log.info('Starting app...');
     log.error('error example');
     log.warn('warning example');
     log.debug('debug example');
+    log.info(`.env example variable ${process.env.EXAMPLE_ENV_VAR}`);
     /** log examples end */
 
     const port = normalizePort(process.env.PORT, config.get<ConfigApiI>('api').port);
@@ -43,12 +44,10 @@ function normalizePort(val: string, defaultVal: number): number {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
     return defaultVal;
   }
 
   if (port >= 0) {
-    // port number
     return port;
   }
 
