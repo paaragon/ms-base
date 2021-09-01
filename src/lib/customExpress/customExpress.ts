@@ -53,7 +53,6 @@ function getEndpoints(app: core.Express): Endpoint[] {
 }
 
 function printEndpoints(this: CustomExpress) {
-    this.config.log('Application endpoints');
     if (!this.endpoints) {
         return;
     }
@@ -77,5 +76,5 @@ function printEndpoints(this: CustomExpress) {
     });
 
     table.push(...rows);
-    this.config.log(`\n${table.toString()}`);
+    this.config.log(`Application endpoints:\n${table.toString()}`);
 }

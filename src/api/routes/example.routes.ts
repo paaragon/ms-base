@@ -1,4 +1,4 @@
-    import { body, param } from 'express-validator';
+import { body, param } from 'express-validator';
 import customExpress from '../../lib/customExpress/customExpress';
 import exampleCtrl from '../controllers/example.ctrl';
 import authCheck from '../mdw/authCheck';
@@ -19,7 +19,7 @@ app.post('/',
 ], validateRequest, exampleCtrl.addExample);
 
 app.get('/slow/:id',
-authCheck, [
+    authCheck, [
     param('id').isNumeric(),
 ], validateRequest, exampleCtrl.getExampleSlow);
 

@@ -10,6 +10,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
     const reqDate: Date = new Date();
     logRequest(req, res);
     const originalJsonfn = res.json.bind(res);
+    const originalSendfn = res.send.bind(res);
 
     res.json = function (arg: any): Response<any> {
         logResponse(req, res, reqDate);
