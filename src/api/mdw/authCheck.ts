@@ -7,13 +7,13 @@ export default function (req: Request, res: Response, next: NextFunction) {
     const auth = req.headers.authorization;
 
     if (!auth) {
-        throw new HttpException(401, 'Acceso denegado');
+        throw new HttpException(401, 'Access denied');
     }
 
     const [user, pass] = getUserPass(auth);
 
     if (!validateAuth(user, pass)) {
-        throw new HttpException(401, 'Acceso denegado');
+        throw new HttpException(401, 'Access denied');
     }
 
     next();
