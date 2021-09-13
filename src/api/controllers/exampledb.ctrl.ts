@@ -7,7 +7,7 @@ export default {
     try {
       const { id } = req.params;
 
-      const result: ExampleDB = await exampleRepo.getExample(parseInt(id));
+      const result: ExampleDB = await exampleRepo.getExample(parseInt(id, 0));
 
       return res.json(result);
 

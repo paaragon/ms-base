@@ -1,7 +1,5 @@
-import * as colors from 'colors';
 import { NextFunction, Request, Response } from 'express';
 import { accessLogger, logger } from '../../logger/logger';
-colors.green;
 
 const accessLog = accessLogger.child({ name: 'access-logger' });
 const log = logger.child({ name: 'access-logger' });
@@ -10,9 +8,8 @@ export default function (req: Request, res: Response, next: NextFunction) {
     const reqDate: Date = new Date();
     logRequest(req, res);
     const originalJsonfn = res.json.bind(res);
-    const originalSendfn = res.send.bind(res);
 
-    res.json = function (arg: any): Response<any> {
+    res.json = (arg: any): Response<any> => {
         logResponse(req, res, reqDate);
         return originalJsonfn(arg);
     };

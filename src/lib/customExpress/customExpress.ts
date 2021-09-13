@@ -5,6 +5,7 @@ import * as core from 'express-serve-static-core';
 export default function (config?: CustomExpressConfig): CustomExpress {
     const customApp: CustomExpress = express() as CustomExpress;
     customApp.config = {
+        // tslint:disable-next-line
         log: config?.log || console.log,
     }
     customApp.use = attatchEndpointsLogger(customApp, customApp.use);
@@ -27,7 +28,7 @@ export interface CustomExpressConfig {
 
 function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
     return function withLogic(this: any) {
-        var res = fn.apply(this, arguments);
+        const res = fn.apply(this, arguments);
         for (const arg of Array.from(arguments)) {
             if (typeof arg === 'function' && arg.name === 'app') {
                 topApp.endpoints = [...topApp.endpoints || [], ...getEndpoints(arg)];
@@ -58,7 +59,7 @@ function printEndpoints(this: CustomExpress) {
     }
 
     let maxEndpointLength = 0;
-    let maxMethodLength = 8;
+    const maxMethodLength = 8;
     const rows = []
     for (const endpoint of this.endpoints) {
         rows.push([endpoint.method, endpoint.path]);

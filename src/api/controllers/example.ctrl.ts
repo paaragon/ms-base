@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Example from '../../models/example.model';
 import exampleService from '../../services/example.service';
+import HttpException from '../exceptions/HttpException';
 
 export default {
   async getExample(req: Request, res: Response, next: NextFunction) {
@@ -43,4 +44,10 @@ export default {
       next(e);
     }
   },
+
+  async getError(req: Request, res: Response, next: NextFunction) {
+    const status = parseInt(req.params.status);
+
+    next(new HttpException(status, 'error'));
+  }
 }

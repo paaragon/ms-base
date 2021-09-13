@@ -7,7 +7,7 @@ import 'winston-daily-rotate-file';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Console, ConsoleTransportInstance } from 'winston/lib/winston/transports';
 import { LoggerConfig, LoggerFileConfig, LoggerLevel, LoggerPrintFunction } from './myfavouriteloggerI';
-colors.green;
+colors.enable();
 
 const { printf } = winston.format;
 const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
@@ -66,7 +66,7 @@ function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunctio
     });
 
     const consoleTransport = new Console({
-        level: level,
+        level,
         format: consoleFormat,
     });
 

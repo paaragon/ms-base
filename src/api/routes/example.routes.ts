@@ -23,4 +23,9 @@ app.get('/slow/:id',
     param('id').isNumeric(),
 ], validateRequest, exampleCtrl.getExampleSlow);
 
+app.get('/error/:status',
+    authCheck, [
+    param('status').isNumeric(),
+], validateRequest, exampleCtrl.getError);
+
 export default app;

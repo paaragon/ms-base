@@ -19,12 +19,12 @@ const options: ConnectionOptions = {
     extra: {
         /**
          * Max pool size for different dbs:
-         * 
+         *
          * This options come from the database driver you are
          * using. If you want to use other properties or you
          * are using a different database, read the documentation
          * of your driver
-         * 
+         *
          * Uncomment the line you need for your database
          */
         // max: dbConfig.maxConnections, // PostgreSQL

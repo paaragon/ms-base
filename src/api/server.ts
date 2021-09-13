@@ -2,6 +2,9 @@ import config from 'config';
 import cors from 'cors';
 import express from 'express';
 import httpContext from 'express-http-context';
+import fs from 'fs';
+import * as yaml from 'js-yaml';
+import swaggerUi from 'swagger-ui-express';
 import customExpress, { CustomExpress } from '../lib/customExpress/customExpress';
 import { logger } from '../logger/logger';
 import { ConfigApiI } from '../models/ConfigI';
@@ -19,7 +22,6 @@ export default class Server {
     constructor(
         public port: number,
     ) {
-
         const customExpressLog = log.child({ name: 'customExpress' });
         this.app = customExpress({
             log: customExpressLog.info.bind(customExpressLog),
@@ -32,6 +34,7 @@ export default class Server {
         this.app.use(httpContext.middleware);
         this.app.use(requestUuid);
         this.app.use(accessLogger);
+        this.initSwaggerRoutes();
         this.initRoutes();
         this.app.use(errorHandler);
     }
@@ -40,6 +43,11 @@ export default class Server {
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/example`, exampleRoutes);
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/db/example`, exampledbRoutes);
         /** add your routes here (use the lines above as examples) */
+    }
+
+    private initSwaggerRoutes() {
+        const swagger = yaml.load(fs.readFileSync(`${__dirname}/../../docs/openapi.yaml`, { encoding: 'utf-8' }));
+        this.app.use(`/doc`, swaggerUi.serve, swaggerUi.setup(swagger));
     }
 
     async start() {
