@@ -46,8 +46,10 @@ export default class Server {
     }
 
     private initSwaggerRoutes() {
-        const swagger = yaml.load(fs.readFileSync(`${__dirname}/../../docs/openapi.yaml`, { encoding: 'utf-8' }));
-        this.app.use(`/doc`, swaggerUi.serve, swaggerUi.setup(swagger));
+        const openapiPath = `${__dirname}/../../docs/openapi.yaml`;
+        const swagger = yaml.load(fs.readFileSync(openapiPath, { encoding: 'utf-8' }));
+        this.app.use(`/openapi`, swaggerUi.serve, swaggerUi.setup(swagger));
+        this.app.use(`/openapi.yaml`, express.static(openapiPath));
     }
 
     async start() {
