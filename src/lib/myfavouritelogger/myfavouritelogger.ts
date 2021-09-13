@@ -43,7 +43,7 @@ function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig,
     const datePattern: string = fileConfig.pathDatePattern || 'YYYY-MM-DD';
     const maxSize: string | number = fileConfig.maxSize || '20m';
     const maxFiles: string | number = fileConfig.maxFiles || '14d';
-    const zippedArchive: boolean = fileConfig.zippedArchive || true;
+    const zippedArchive: boolean = fileConfig.zippedArchive || false;
 
     const dailyTransport = new DailyRotateFile({
         filename: filePath,
