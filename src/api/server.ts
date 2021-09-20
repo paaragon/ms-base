@@ -13,6 +13,7 @@ import errorHandler from './mdw/errorHandler';
 import requestUuid from './mdw/requestUuid';
 import exampleRoutes from './routes/example.routes';
 import exampledbRoutes from './routes/exampledb.routes';
+import healthRoutes from './routes/health.routes';
 
 const log = logger.child({ name: 'server.ts' });
 
@@ -42,6 +43,7 @@ export default class Server {
     private initRoutes() {
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/example`, exampleRoutes);
         this.app.use(`/api/v${config.get<ConfigApiI>('api').version}/db/example`, exampledbRoutes);
+        this.app.use(`/health`, healthRoutes);
         /** add your routes here (use the lines above as examples) */
     }
 
