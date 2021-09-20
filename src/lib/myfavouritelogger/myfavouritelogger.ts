@@ -7,7 +7,6 @@ import 'winston-daily-rotate-file';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Console, ConsoleTransportInstance } from 'winston/lib/winston/transports';
 import { LoggerConfig, LoggerFileConfig, LoggerLevel, LoggerPrintFunction } from './myfavouriteloggerI';
-colors.enable();
 
 const { printf } = winston.format;
 const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
@@ -16,7 +15,10 @@ export default function (loggerConfig?: LoggerConfig) {
     const printFormat = loggerConfig?.printFormat || defaultPrint;
     const level = loggerConfig?.level || 'info';
     const filePath = loggerConfig?.file?.path;
-
+    const printColors = loggerConfig?.colors;
+    if (printColors === false) {
+        colors.disable();
+    }
     const transports: (DailyRotateFile | ConsoleTransportInstance)[] = [];
 
     if (filePath) {
@@ -24,7 +26,7 @@ export default function (loggerConfig?: LoggerConfig) {
     }
 
     if (loggerConfig.console !== false) {
-        transports.push(getConsoleTransport(level, printFormat));
+        transports.push(getConsoleTransport(level, printFormat, printColors));
     }
 
     const logger = winston.createLogger({ transports });
@@ -58,7 +60,7 @@ function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig,
     return dailyTransport;
 }
 
-function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunction): ConsoleTransportInstance {
+function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunction, printColors: boolean): ConsoleTransportInstance {
     const consoleFormat = printf((info: TransformableInfo) => {
         let str = `${tsFormat()} `;
         str = printFormat(str, info);
@@ -79,7 +81,7 @@ function defaultPrint(str: string, info: TransformableInfo): string {
         str += `[${time.padStart(7, ' ')}] `;
     }
     if (info.level) {
-        str += mapLevelColor(info.level, `[${info.level.padEnd(7, ' ')}] `);
+        str += mapLevelColor(info.level, `[${info.level}] `);
     }
     if (info.name) {
         str += `[${info.name}] `.green;

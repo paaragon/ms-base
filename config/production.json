@@ -5,7 +5,8 @@
         }
     },
     "log": {
-        "level": "warn"
+        "level": "warn",
+        "color": false
     },
     "db": {
         "location": "./data/db.sq3"

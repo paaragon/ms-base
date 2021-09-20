@@ -6,6 +6,7 @@ export interface ConfigApiI {
 
 export interface ConfigLogI {
     level: 'debug' | 'info' | 'warn' | 'error';
+    color: boolean;
 }
 
 export interface ConfigSQLiteI {

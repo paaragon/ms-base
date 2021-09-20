@@ -18,4 +18,5 @@ export interface LoggerConfig {
     file?: LoggerFileConfig;
     console?: boolean;
     level?: LoggerLevel;
+    colors?: boolean;
 }

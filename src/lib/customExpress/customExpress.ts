@@ -6,7 +6,7 @@ export default function (config?: CustomExpressConfig): CustomExpress {
     const customApp: CustomExpress = express() as CustomExpress;
     customApp.config = {
         // tslint:disable-next-line
-        log: config?.log || console.log,
+        log: config?.log || console.log,
     }
     customApp.use = attatchEndpointsLogger(customApp, customApp.use);
     customApp.printEndpoints = printEndpoints;
