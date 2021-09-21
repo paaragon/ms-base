@@ -46,7 +46,7 @@ export default {
   },
 
   async getError(req: Request, res: Response, next: NextFunction) {
-    const status = parseInt(req.params.status);
+    const status = parseInt(req.params.status, 10);
 
     next(new HttpException(status, 'error'));
   }
