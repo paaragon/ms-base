@@ -1,5 +1,4 @@
 import * as colors from 'colors';
-import httpContext from 'express-http-context';
 import { TransformableInfo } from 'logform';
 import moment from 'moment';
 import winston from 'winston';
@@ -75,43 +74,30 @@ function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunctio
     return consoleTransport;
 }
 
-function defaultPrint(str: string, info: TransformableInfo): string {
-    if (httpContext.get('starttime')) {
-        const time = formatTime(new Date().getTime() - httpContext.get('starttime'));
-        str += `[${time.padStart(7, ' ')}] `;
-    }
+function defaultPrint(this: any, str: string, info: TransformableInfo): string {
     if (info.level) {
         str += mapLevelColor(info.level, `[${info.level}] `);
     }
     if (info.name) {
         str += `[${info.name}] `.green;
     }
-    if (httpContext.get('uuid')) {
-        str += `[${httpContext.get('uuid')}] `.grey;
-    }
+
     str += `${info.message}`;
 
     return str;
 }
 
-function mapLevelColor(level: string, str: string) {
-    if (level === 'info') {
-        return str.blue;
-    } else if (level === 'error') {
-        return str.red;
-    } else if (level === 'warn') {
-        return str.yellow;
-    } else if (level === 'debug') {
-        return str.grey;
-    } else {
-        return str;
-    }
-}
-
-function formatTime(time: number): string {
-    if (time > 1000) {
-        return `+${Math.round(time / 10) / 100}s`;
-    } else {
-        return `+${time}ms`;
+export function mapLevelColor(level: string, str: string) {
+    switch (level) {
+        case 'info':
+            return str.blue;
+        case 'error':
+            return str.red;
+        case 'warn':
+            return str.yellow;
+        case 'debug':
+            return str.grey;
+        default:
+            return str;
     }
 }

@@ -1,6 +1,7 @@
 import config from 'config';
 import myfavouritelogger from "../lib/myfavouritelogger/myfavouritelogger";
 import { ConfigLogI } from '../models/ConfigI';
+import { printFormat } from './printFormat';
 
 const logFolder = process.env.LOG_FOLDER_PATH || './logs';
 
@@ -13,7 +14,8 @@ const logger = myfavouritelogger({
         maxFiles: '14d',
     },
     level: logConfig.level,
-    colors: logConfig.color
+    colors: logConfig.color,
+    printFormat
 });
 
 const accessLogger = myfavouritelogger({
@@ -22,7 +24,8 @@ const accessLogger = myfavouritelogger({
     },
     console: false,
     level: logConfig.level,
-    colors: logConfig.color
+    colors: logConfig.color,
+    printFormat
 });
 
 export { logger, accessLogger };
