@@ -19,4 +19,5 @@ export interface LoggerConfig {
     console?: boolean;
     level?: LoggerLevel;
     colors?: boolean;
+    dateFormat: string;
 }

@@ -15,7 +15,8 @@ const logger = myfavouritelogger({
     },
     level: logConfig.level,
     colors: logConfig.color,
-    printFormat
+    printFormat,
+    dateFormat: 'YYYY-MM-DD HH:mm:ssZ',
 });
 
 const accessLogger = myfavouritelogger({
@@ -25,7 +26,8 @@ const accessLogger = myfavouritelogger({
     console: false,
     level: logConfig.level,
     colors: logConfig.color,
-    printFormat
+    printFormat,
+    dateFormat: 'YYYY-MM-DD HH:mm:ssZ',
 });
 
 export { logger, accessLogger };

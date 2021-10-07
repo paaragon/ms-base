@@ -8,32 +8,35 @@ import { Console, ConsoleTransportInstance } from 'winston/lib/winston/transport
 import { LoggerConfig, LoggerFileConfig, LoggerLevel, LoggerPrintFunction } from './myfavouriteloggerI';
 
 const { printf } = winston.format;
-const tsFormat = () => moment.utc().format('YYYY-MM-DD HH:mm:ssZ').trim();
 
 export default function (loggerConfig?: LoggerConfig) {
     const printFormat = loggerConfig?.printFormat || defaultPrint;
     const level = loggerConfig?.level || 'info';
     const filePath = loggerConfig?.file?.path;
     const printColors = loggerConfig?.colors;
+    const dateFormat = loggerConfig?.dateFormat || 'YYYY-MM-DD HH:mm:ssZ';
+
     if (printColors === false) {
         colors.disable();
     }
     const transports: (DailyRotateFile | ConsoleTransportInstance)[] = [];
 
+    const tsFormat = () => moment.utc().format(dateFormat).trim();
     if (filePath) {
-        transports.push(getDailyFileTransport(level, loggerConfig.file, printFormat));
+        transports.push(getDailyFileTransport(level, loggerConfig.file, printFormat, tsFormat));
     }
 
     if (loggerConfig.console !== false) {
-        transports.push(getConsoleTransport(level, printFormat, printColors));
+        transports.push(getConsoleTransport(level, printFormat, tsFormat));
     }
+
 
     const logger = winston.createLogger({ transports });
 
     return logger;
 }
 
-function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig, printFormat: LoggerPrintFunction): DailyRotateFile {
+function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig, printFormat: LoggerPrintFunction, tsFormat: () => string): DailyRotateFile {
     const fileFormat = printf((info: TransformableInfo) => {
         let str = `${tsFormat()} `;
         str = printFormat(str, info);
@@ -59,7 +62,7 @@ function getDailyFileTransport(level: LoggerLevel, fileConfig: LoggerFileConfig,
     return dailyTransport;
 }
 
-function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunction, printColors: boolean): ConsoleTransportInstance {
+function getConsoleTransport(level: LoggerLevel, printFormat: LoggerPrintFunction, tsFormat: () => string): ConsoleTransportInstance {
     const consoleFormat = printf((info: TransformableInfo) => {
         let str = `${tsFormat()} `;
         str = printFormat(str, info);
