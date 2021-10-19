@@ -1,6 +1,6 @@
 {
   "name": "ms-base",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is an example microservice which can be used as code base for any Typescript microservice",
   "main": "dist/index.js",
   "scripts": {
