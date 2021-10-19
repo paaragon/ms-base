@@ -3,3 +3,4 @@ data
 logs
 .DS_Store
 dist
+coverage

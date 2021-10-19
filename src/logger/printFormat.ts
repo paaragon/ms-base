@@ -2,7 +2,7 @@ import httpContext from 'express-http-context';
 import { TransformableInfo } from 'logform';
 import { mapLevelColor } from '../lib/myfavouritelogger/myfavouritelogger';
 
-export function printFormat(this: any, str: string, info: TransformableInfo): string {
+export function printFormat(str: string, info: TransformableInfo): string {
     if (httpContext.get('starttime')) {
         const time = formatTime(new Date().getTime() - httpContext.get('starttime'));
         str += `[${time}] `;
