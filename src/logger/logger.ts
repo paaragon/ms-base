@@ -1,5 +1,5 @@
 import config from 'config';
-import myfavouritelogger from "../lib/myfavouritelogger/myfavouritelogger";
+import myfavouritelogger from 'myfavouritelogger';
 import { ConfigLogI } from '../models/ConfigI';
 import { printFormat } from './printFormat';
 

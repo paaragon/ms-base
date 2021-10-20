@@ -1,6 +1,8 @@
+import colors from 'colors';
 import httpContext from 'express-http-context';
 import { TransformableInfo } from 'logform';
-import { mapLevelColor } from '../lib/myfavouritelogger/myfavouritelogger';
+import { mapLevelColor } from 'myfavouritelogger';
+colors.enable();
 
 export function printFormat(str: string, info: TransformableInfo): string {
     if (httpContext.get('starttime')) {
