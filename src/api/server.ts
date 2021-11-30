@@ -57,12 +57,9 @@ export default class Server {
     }
 
     async start() {
-        return new Promise<void>((res, rej) => {
-            this.app.listen(this.port, () => {
-                this.app.printEndpoints();
-                log.info(`Server is listening on port ${this.port}`);
-                res();
-            });
+        this.app.listen(this.port, () => {
+            this.app.printEndpoints();
+            log.info(`Server is listening on port ${this.port}`);
         });
     }
 }
