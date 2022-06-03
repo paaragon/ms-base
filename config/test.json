@@ -1,0 +1,14 @@
+{
+    "api": {
+        "security": {
+            "admin": "admin"
+        }
+    },
+    "log": {
+        "level": "debug",
+        "color": true
+    },
+    "db": {
+        "location": "./data/db.sq3"
+    }
+}

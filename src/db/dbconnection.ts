@@ -1,5 +1,6 @@
 import config from 'config';
 import { ConnectionOptions, createConnection } from 'typeorm';
+import { TypeOrmLogger } from '../lib/typeormlogger/TypeOrmLogger';
 import { logger } from '../logger/logger';
 import { ConfigLogI, ConfigSQLiteI } from '../models/ConfigI';
 
@@ -40,6 +41,8 @@ const options: ConnectionOptions = {
         }
     */
     synchronize: true,
+    logger: new TypeOrmLogger(),
+    maxQueryExecutionTime: dbConfig.queryAlertTime,
     logging: logConfig.level === 'debug',
     entities: [
         `${__dirname}/../models/dbentities/*.ts`,

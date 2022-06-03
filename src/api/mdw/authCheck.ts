@@ -27,7 +27,6 @@ function getUserPass(basicAuth: string): string[] {
 }
 
 function validateAuth(user: string, pass: string): boolean {
-    const secutiryConfig = config.get<ConfigApiI>('api').security;
-
-    return secutiryConfig[user] && secutiryConfig[user] === pass;
+    const securityConfig = config.get<ConfigApiI>('api').security;
+    return securityConfig[user] && securityConfig[user] === pass;
 }

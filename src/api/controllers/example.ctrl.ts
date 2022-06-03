@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import Example from '../../models/example.model';
-import exampleService from '../../services/example.service';
+import ExampleDB from '../../models/dbentities/example.db';
+import exampleRepo from '../../repository/example.repo';
 import HttpException from '../exceptions/HttpException';
 
 export default {
@@ -8,35 +8,7 @@ export default {
     try {
       const { id } = req.params;
 
-      const result: Example = await exampleService.getExample(id);
-
-      return res.json(result);
-
-    } catch (e) {
-      next(e);
-    }
-  },
-
-  async getExampleSlow(req: Request, res: Response, next: NextFunction) {
-    setTimeout(async () => {
-      try {
-        const { id } = req.params;
-
-        const result: Example = await exampleService.getExample(id);
-
-        return res.json(result);
-
-      } catch (e) {
-        next(e);
-      }
-    }, 10000);
-  },
-
-  async addExample(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id, title, body } = req.body;
-
-      const result: Example = await exampleService.getExample(id);
+      const result: ExampleDB = await exampleRepo.getExample(parseInt(id, 0));
 
       return res.json(result);
 
