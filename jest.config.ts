@@ -10,7 +10,6 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   coverageReporters: ["json", "html", "lcov"],
-  collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],
   testPathIgnorePatterns: [
   ],
