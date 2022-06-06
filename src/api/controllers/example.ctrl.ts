@@ -1,25 +1,18 @@
-import { NextFunction, Request, Response } from 'express';
-import ExampleDB from '../../models/dbentities/example.db';
-import exampleRepo from '../../repository/example.repo';
-import HttpException from '../exceptions/HttpException';
+import Controller from '../schema/Controller';
+import ExampleRequest from '../schema/ExampleRequest';
+import ExampleResponse from '../schema/ExampleResponse';
 
-export default {
-  async getExample(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
 
-      const result: ExampleDB = await exampleRepo.getExample(parseInt(id, 0));
+export default class ExampleController extends Controller {
+  async example(req: ExampleRequest): Promise<ExampleResponse> {
 
-      return res.json(result);
+    const id = req.params.id;
+    const name = req.body.name;
+    const type = req.body.type;
 
-    } catch (e) {
-      next(e);
-    }
-  },
-
-  async getError(req: Request, res: Response, next: NextFunction) {
-    const status = parseInt(req.params.status, 10);
-
-    next(new HttpException(status, 'error'));
+    return {
+      error: false,
+      message: `Received parameters:\n\tid: ${id}\n\tname: ${name}\n\ttype: ${type}`
+    };
   }
 }

@@ -1,31 +1,15 @@
-import { body, param } from 'express-validator';
 import customExpress from '../../lib/customExpress/customExpress';
-import exampleCtrl from '../controllers/example.ctrl';
+import ExampleController from '../controllers/example.ctrl';
 import authCheck from '../mdw/authCheck';
-import validateRequest from '../mdw/validateRequest';
+import ExampleRequest from '../schema/ExampleRequest';
 
 const app = customExpress();
 
-app.get('/:id',
-    authCheck, [
-    param('id').isNumeric(),
-], validateRequest, exampleCtrl.getExample);
+const controller = new ExampleController();
 
-app.post('/',
-    authCheck, [
-    body('userId').isNumeric(),
-    body('title').isString(),
-    body('body').isString(),
-], validateRequest, exampleCtrl.addExample);
-
-app.get('/slow/:id',
-    authCheck, [
-    param('id').isNumeric(),
-], validateRequest, exampleCtrl.getExampleSlow);
-
-app.get('/error/:status',
-    authCheck, [
-    param('status').isNumeric(),
-], validateRequest, exampleCtrl.getError);
+app.put('/:id',
+    authCheck,
+    controller.run(new ExampleRequest(), controller.example)
+);
 
 export default app;
