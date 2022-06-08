@@ -1,6 +1,7 @@
-export default interface Example {
+
+export default class Example {
     id?: number;
-    title: string;
-    body: string;
-    userId: number;
+    name: string;
+    lastName: string;
+    date: Date;
 }

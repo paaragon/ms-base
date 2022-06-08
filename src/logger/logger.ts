@@ -1,6 +1,6 @@
 import config from 'config';
 import myfavouritelogger from 'myfavouritelogger';
-import { ConfigLogI } from '../models/ConfigI';
+import { ConfigLogI } from '../config';
 import { printFormat } from './printFormat';
 
 const logFolder = process.env.LOG_FOLDER_PATH || './logs';

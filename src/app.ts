@@ -2,9 +2,9 @@ import config from 'config';
 import dotenv from 'dotenv';
 import 'reflect-metadata';
 import Server from './api/server';
-import dbconnection from './db/dbconnection';
+import { ConfigApiI } from './config';
+import dbConnection from './db/db-connector';
 import { logger } from './logger/logger';
-import { ConfigApiI } from './models/ConfigI';
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ log.info('Starting app...');
 
     /** if you don't want db connection, delete the following lines */
     log.info('Connecting database...');
-    await dbconnection.createConnection();
+    await dbConnection.init();
     log.info('Database connected');
     /** stop deleting lines */
 
