@@ -4,10 +4,8 @@ import Controller from '../schema/Controller';
 import UpdateExampleRequest from '../schema/UpdateExampleRequest';
 import UpdateExampleResponse from '../schema/UpdateExampleResponse';
 
-
 export default class ExampleController extends Controller {
   async updateExample(req: UpdateExampleRequest): Promise<UpdateExampleResponse> {
-
     const id = parseInt(req.params.id, 10);
     const example: Example = req.body;
     example.id = id;
@@ -16,7 +14,7 @@ export default class ExampleController extends Controller {
 
     return {
       error: false,
-      result: result
+      result,
     };
   }
 }

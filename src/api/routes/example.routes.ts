@@ -7,9 +7,10 @@ const app = customExpress();
 
 const controller = new ExampleController();
 
-app.put('/:id',
-    authCheck,
-    controller.run(new UpdateExampleRequest(), controller.updateExample)
+app.put(
+  '/:id',
+  authCheck,
+  controller.run(new UpdateExampleRequest(), controller.updateExample),
 );
 
 export default app;

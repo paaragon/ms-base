@@ -4,29 +4,29 @@ import { ConfigApiI } from '../../config';
 import HttpException from '../exceptions/HttpException';
 
 export default function (req: Request, res: Response, next: NextFunction) {
-    const auth = req.headers.authorization;
+  const auth = req.headers.authorization;
 
-    if (!auth) {
-        throw new HttpException(401, 'Access denied');
-    }
+  if (!auth) {
+    throw new HttpException(401, 'Access denied');
+  }
 
-    const [user, pass] = getUserPass(auth);
+  const [user, pass] = getUserPass(auth);
 
-    if (!validateAuth(user, pass)) {
-        throw new HttpException(401, 'Access denied');
-    }
+  if (!validateAuth(user, pass)) {
+    throw new HttpException(401, 'Access denied');
+  }
 
-    next();
+  next();
 }
 
 function getUserPass(basicAuth: string): string[] {
-    const token = basicAuth.replace('Basic ', '');
-    const buff = Buffer.from(token, 'base64');
-    const decodedToken = buff.toString('ascii');
-    return decodedToken.split(':');
+  const token = basicAuth.replace('Basic ', '');
+  const buff = Buffer.from(token, 'base64');
+  const decodedToken = buff.toString('ascii');
+  return decodedToken.split(':');
 }
 
 function validateAuth(user: string, pass: string): boolean {
-    const securityConfig = config.get<ConfigApiI>('api').security;
-    return securityConfig[user] && securityConfig[user] === pass;
+  const securityConfig = config.get<ConfigApiI>('api').security;
+  return securityConfig[user] && securityConfig[user] === pass;
 }

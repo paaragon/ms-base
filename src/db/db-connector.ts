@@ -7,14 +7,14 @@ const dbConfig = config.get<ConfigSQLiteI>('db');
 const logConfig = config.get<ConfigLogI>('log');
 
 export const AppDataSource = new DataSource({
-    name: 'default',
+  name: 'default',
 
-    /* SQLite config */
-    type: 'sqlite',
-    database: dbConfig.location,
+  /* SQLite config */
+  type: 'sqlite',
+  database: dbConfig.location,
 
-    /* Oracle config */
-    /*
+  /* Oracle config */
+  /*
         type: 'oracle',
         connectString: dbConfig.connectionString, // this is an option. You can configure it also with host, port and database properties
         username: dbConfig.user,
@@ -24,8 +24,8 @@ export const AppDataSource = new DataSource({
         }
      */
 
-    /* Postgres config */
-    /*
+  /* Postgres config */
+  /*
         type: 'postgres',
         database: dbConfig.db,
         host: dbConfig.host,
@@ -39,18 +39,18 @@ export const AppDataSource = new DataSource({
             max: dbConfig.maxConnections,
         }
     */
-    synchronize: true,
-    logger: new TypeOrmLogger(),
-    maxQueryExecutionTime: dbConfig.queryAlertTime,
-    logging: logConfig.level === 'debug',
-    entities: [
-        `${__dirname}/entities/*.ts`,
-        `${__dirname}/entities/dbentities/*.js`,
-    ],
+  synchronize: true,
+  logger: new TypeOrmLogger(),
+  maxQueryExecutionTime: dbConfig.queryAlertTime,
+  logging: logConfig.level === 'debug',
+  entities: [
+    `${__dirname}/entities/*.ts`,
+    `${__dirname}/entities/dbentities/*.js`,
+  ],
 });
 
 export default {
-    init: async () => {
-        await AppDataSource.initialize();
-    }
-}
+  init: async () => {
+    await AppDataSource.initialize();
+  },
+};

@@ -1,34 +1,39 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import Example from '../../models/example.model';
 import DBEntity from './DBEntity';
 
 @Entity('EXAMPLE')
 export default class ExampleDB implements DBEntity {
-    @PrimaryGeneratedColumn({ name: 'ID' })
+  @PrimaryGeneratedColumn({ name: 'ID' })
     id?: number;
 
-    @Column({ name: 'NAME' })
+  @Column({ name: 'NAME' })
     name: string;
 
-    @Column({ name: 'LAST_NAME' })
+  @Column({ name: 'LAST_NAME' })
     lastName: string;
 
-    @Column({ name: 'DATE' })
+  @Column({ name: 'DATE' })
     date: Date;
 
-    deserialize(example: Example) {
-        this.id = example.id;
-        this.name = example.name;
-        this.lastName = example.lastName;
-        this.date = example.date;
-    }
+  @Column({ name: 'AVATAR' })
+    avatar: string;
 
-    serialize(): Example {
-        const ret = new Example();
-        ret.id = this.id;
-        ret.name = this.name;
-        ret.lastName = this.lastName;
-        ret.date = this.date;
-        return ret;
-    }
+  deserialize(example: Example) {
+    this.id = example.id;
+    this.name = example.name;
+    this.lastName = example.lastName;
+    this.date = example.date;
+    this.avatar = example.avatar;
+  }
+
+  serialize(): Example {
+    const ret = new Example();
+    ret.id = this.id;
+    ret.name = this.name;
+    ret.lastName = this.lastName;
+    ret.date = this.date;
+    ret.avatar = this.avatar;
+    return ret;
+  }
 }

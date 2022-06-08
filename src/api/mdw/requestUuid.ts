@@ -11,9 +11,9 @@ declare global {
 }
 
 export default function (req: Request, res: Response, next: NextFunction) {
-    const currUuid = uuid();
-    httpContext.set('uuid', currUuid)
-    req.uuid = currUuid;
-    httpContext.set('starttime', new Date().getTime());
-    next();
+  const currUuid = uuid();
+  httpContext.set('uuid', currUuid);
+  req.uuid = currUuid;
+  httpContext.set('starttime', new Date().getTime());
+  next();
 }
