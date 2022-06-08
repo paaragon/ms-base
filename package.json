@@ -40,6 +40,8 @@
   },
   "homepage": "https://github.com/paaragon/ms-base#readme",
   "dependencies": {
+    "axios": "^0.27.2",
+    "axios-better-stacktrace": "^2.1.2",
     "cli-table": "^0.3.11",
     "colors": "^1.4.0",
     "config": "^3.3.7",
