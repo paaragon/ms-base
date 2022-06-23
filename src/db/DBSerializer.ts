@@ -5,7 +5,7 @@ export default abstract class DBSerializer {
 
     public abstract deserialize(dbResult: DBEntity): this;
 
-    public deserializeList<T>(dbResult: DBEntity[]): this[] {
+    public deserializeList(dbResult: DBEntity[]): this[] {
       return dbResult.map(this.deserialize);
     }
 }

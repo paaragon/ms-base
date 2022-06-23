@@ -4,7 +4,7 @@ import { accessLogger, logger } from '../../logger/logger';
 const accessLog = accessLogger.child({ name: 'access-logger' });
 const log = logger.child({ name: 'access-logger' });
 
-export default function (req: Request, res: Response, next: NextFunction) {
+export default function(req: Request, res: Response, next: NextFunction) {
   const reqDate: Date = new Date();
   logRequest(req, res);
   const originalJsonfn = res.json.bind(res);

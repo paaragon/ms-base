@@ -6,7 +6,7 @@ import UpdateExampleRequest from '../schema/UpdateExampleRequest';
 import UpdateExampleResponse from '../schema/UpdateExampleResponse';
 
 export default class ExampleController extends Controller {
-  async updateExample(req: UpdateExampleRequest): Promise<UpdateExampleResponse> {
+  static async updateExample(req: UpdateExampleRequest): Promise<UpdateExampleResponse> {
     const id = parseInt(req.params.id, 10);
     const example: Example = req.body;
     example.id = id;

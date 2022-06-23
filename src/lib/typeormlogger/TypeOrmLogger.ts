@@ -1,7 +1,7 @@
 import { Logger, QueryRunner } from 'typeorm';
 import { logger } from '../../logger/logger';
 
-export class TypeOrmLogger implements Logger {
+export default class TypeOrmLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
     // logger.info(`Execute query: ${query} params: ${parameters}`);
     // logger.info(JSON.stringify(queryRunner.broadcaster.));

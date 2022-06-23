@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ConfigApiI } from '../../config';
 import HttpException from '../exceptions/HttpException';
 
-export default function (req: Request, res: Response, next: NextFunction) {
+export default function(req: Request, res: Response, next: NextFunction) {
   const auth = req.headers.authorization;
 
   if (!auth) {

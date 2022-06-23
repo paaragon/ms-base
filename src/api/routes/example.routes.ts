@@ -5,12 +5,10 @@ import UpdateExampleRequest from '../schema/UpdateExampleRequest';
 
 const app = customExpress();
 
-const controller = new ExampleController();
-
 app.put(
-  '/:id',
-  authCheck,
-  controller.run(new UpdateExampleRequest(), controller.updateExample),
+    '/:id',
+    authCheck,
+    ExampleController.run(new UpdateExampleRequest(), ExampleController.updateExample),
 );
 
 export default app;

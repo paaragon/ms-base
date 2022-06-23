@@ -11,5 +11,5 @@ export default function errorHandler(error: HttpException, req: Request, res: Re
   log.error(`Response error: ${status} - ${message}`);
   log.error(error.stack);
   res.status(status)
-    .json({ error: true, message, extra });
+      .json({ error: true, message, extra });
 }

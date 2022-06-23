@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'airbnb-base',
+    'google',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -15,5 +15,18 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'require-jsdoc': ['off'],
+    'object-curly-spacing': ['error', 'always'],
+    'max-len': ['error', { 'code': 120 }],
+    'new-cap': ['off'],
+    'semi': ['off'],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: 'packages/*/src',
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };

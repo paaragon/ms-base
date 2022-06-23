@@ -4,9 +4,11 @@ import Example from '../models/example.model';
 
 export default {
   async getExample(id: number): Promise<Example> {
-    const result: ExampleDB = await AppDataSource.getRepository(ExampleDB).findOne({
-      where: { id },
-    });
+    const result: ExampleDB = await AppDataSource
+        .getRepository(ExampleDB)
+        .findOne({
+          where: { id },
+        });
 
     return result.serialize();
   },

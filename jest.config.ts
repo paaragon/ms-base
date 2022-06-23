@@ -5,16 +5,15 @@ module.exports = {
     'ts-jest': {
       diagnostics: false,
       // babelConfig: true
-    }
+    },
   },
   testEnvironment: 'node',
   verbose: true,
-  coverageReporters: ["json", "html", "lcov"],
-  collectCoverageFrom: ["src/**/*.ts"],
+  coverageReporters: ['json', 'html', 'lcov'],
+  collectCoverageFrom: ['src/**/*.ts'],
   testPathIgnorePatterns: [
   ],
   coveragePathIgnorePatterns: [
   ],
-  testTimeout: 35000
-
+  testTimeout: 35000,
 };

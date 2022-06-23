@@ -1,12 +1,12 @@
-import express from 'express';
+import { Request as ExpressRequest } from 'express';
 import Example from '../../models/example.model';
 import HttpException from '../exceptions/HttpException';
 import Request from './Request';
 
 export default class UpdateExampleRequest extends Request {
   params: {
-        id: string;
-    };
+    id: string;
+  };
 
   body!: Example;
 
@@ -14,7 +14,7 @@ export default class UpdateExampleRequest extends Request {
     super();
   }
 
-  public validate(req: express.Request): boolean {
+  public validate(req: ExpressRequest): boolean {
     if (!req.params.id) {
       throw new HttpException(400, 'Id param not found in url');
     }

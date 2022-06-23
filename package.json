@@ -18,19 +18,6 @@
   },
   "author": "Pablo Aragón Moreno <pablo.aragon22@gmail.com>",
   "license": "ISC",
-  "devDependencies": {
-    "@types/cli-table": "^0.3.0",
-    "@types/colors": "^1.2.1",
-    "@types/config": "^0.0.41",
-    "@types/cors": "^2.8.12",
-    "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
-    "eslint": "^8.17.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "ts-node-dev": "^2.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paaragon/ms-base.git"
@@ -49,13 +36,26 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-http-context": "^1.2.4",
-    "jest": "^28.1.1",
-    "myfavouritelogger": "^1.2.16",
+    "myfavouritelogger": "^1.4.1",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.8",
-    "ts-jest": "^28.0.4",
+    "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.6",
-    "typescript": "^4.7.3",
+    "typescript": "^4.7.4",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/cli-table": "^0.3.0",
+    "@types/colors": "^1.2.1",
+    "@types/config": "^0.0.41",
+    "@types/cors": "^2.8.12",
+    "@types/jest": "^28.1.3",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.5"
   }
 }

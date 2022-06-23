@@ -1,7 +1,7 @@
 import config from 'config';
 import { DataSource } from 'typeorm';
 import { ConfigLogI, ConfigSQLiteI } from '../config';
-import { TypeOrmLogger } from '../lib/typeormlogger/TypeOrmLogger';
+import TypeOrmLogger from '../lib/typeormlogger/TypeOrmLogger';
 
 const dbConfig = config.get<ConfigSQLiteI>('db');
 const logConfig = config.get<ConfigLogI>('log');
@@ -16,7 +16,8 @@ export const AppDataSource = new DataSource({
   /* Oracle config */
   /*
         type: 'oracle',
-        connectString: dbConfig.connectionString, // this is an option. You can configure it also with host, port and database properties
+        // this connectString is an option. You can configure it also with host, port and database properties
+        connectString: dbConfig.connectionString,
         username: dbConfig.user,
         password: dbConfig.password,
         extra: {
@@ -44,8 +45,7 @@ export const AppDataSource = new DataSource({
   maxQueryExecutionTime: dbConfig.queryAlertTime,
   logging: logConfig.level === 'debug',
   entities: [
-    `${__dirname}/entities/*.ts`,
-    `${__dirname}/entities/dbentities/*.js`,
+    `${__dirname}/entities/*.{ts,js}`,
   ],
 });
 

@@ -1,29 +1,18 @@
+/* eslint-disable prefer-rest-params */
+/* eslint-disable no-invalid-this */
 import Table from 'cli-table';
 import express from 'express';
 import * as core from 'express-serve-static-core';
 
-export default function (config?: CustomExpressConfig): CustomExpress {
-  const customApp: CustomExpress = express() as CustomExpress;
-  customApp.config = {
-    // tslint:disable-next-line
-    log: config?.log || console.log,
-  };
-  customApp.use = attatchEndpointsLogger(customApp, customApp.use);
-  customApp.printEndpoints = printEndpoints;
-
-  return customApp;
-}
-
-export interface CustomExpress extends core.Express {
-    endpoints: Endpoint[];
-    printEndpoints: () => void,
-    config: CustomExpressConfig;
-}
-
 export type Endpoint = { method: string, path: string };
 
 export interface CustomExpressConfig {
-    log: (message: string) => void;
+  log: (message: string) => void;
+}
+export interface CustomExpress extends core.Express {
+  endpoints: Endpoint[];
+  printEndpoints: () => void,
+  config: CustomExpressConfig;
 }
 
 function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
@@ -39,10 +28,10 @@ function attatchEndpointsLogger(topApp: CustomExpress, fn: Function) {
 }
 
 function getEndpoints(app: core.Express): Endpoint[] {
-  const appPaths: { methods: string[], path: string }[] = app._router.stack
-    .filter((s: any) => s.name === 'bound dispatch')
-    .map((s: any) => s.route)
-    .map((r: any) => ({ methods: Object.keys(r.methods).filter((m: any) => m), path: r.path }));
+  const appPaths: { methods: string[], path: string }[] = (app as any)._router.stack
+      .filter((s: any) => s.name === 'bound dispatch')
+      .map((s: any) => s.route)
+      .map((r: any) => ({ methods: Object.keys(r.methods).filter((m: any) => m), path: r.path }));
 
   const ret: Endpoint[] = [];
   for (const appPath of appPaths) {
@@ -78,4 +67,16 @@ function printEndpoints(this: CustomExpress) {
 
   table.push(...rows);
   this.config.log(`Application endpoints:\n${table.toString()}`);
+}
+
+export default function(config?: CustomExpressConfig): CustomExpress {
+  const customApp: CustomExpress = express() as CustomExpress;
+  customApp.config = {
+    // tslint:disable-next-line
+    log: config?.log || console.log,
+  };
+  customApp.use = attatchEndpointsLogger(customApp, customApp.use);
+  customApp.printEndpoints = printEndpoints;
+
+  return customApp;
 }
