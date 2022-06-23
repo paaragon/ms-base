@@ -9,7 +9,8 @@ const app = customExpress();
 app.put(
     '/:id',
     authCheck,
-    ControllerRunner.validateAndRun(UpdateExampleRequest, ExampleController.updateExample),
+    ControllerRunner.validate(UpdateExampleRequest),
+    ControllerRunner.run(ExampleController.updateExample),
 );
 
 export default app;
