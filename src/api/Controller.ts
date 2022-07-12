@@ -1,9 +1,9 @@
 import express from 'express';
-import HttpException from '../exceptions/HttpException';
-import Request from './Request';
-import Response from './Response';
+import HttpException from './exceptions/HttpException';
+import Request from './schema/Request';
+import Response from './schema/Response';
 
-export default class ControllerRunner {
+export default class Controller {
   public static validate<T extends Request>(reqTypePrototype: new () => T) {
     return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
       try {
@@ -11,6 +11,7 @@ export default class ControllerRunner {
         if (!controllerRequest.validate(req)) {
           throw new HttpException(400, 'Bad request');
         }
+        next();
       } catch (e) {
         next(e);
       }
