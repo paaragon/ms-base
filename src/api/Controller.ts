@@ -25,19 +25,19 @@ export default class Controller {
   public static run<T extends Request, S extends Response>(method: (req: T) => Promise<S>) {
     return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
       try {
-        const methodPromise = method(req as any);
+        const reqPromises: Promise<any>[] = [method(req as any)]
 
         if (timeout) {
           const timeoutPromise = new Promise((resolve, reject) => {
             setTimeout(() => reject(new RequestTimeoutException()), timeout);
           });
 
-          const response = await Promise.race([methodPromise, timeoutPromise]);
-
-          res.json(response);
-        } else {
-          return await methodPromise;
+          reqPromises.push(timeoutPromise);
         }
+
+        const response = await Promise.race(reqPromises);
+
+        res.json(response);
       } catch (e) {
         next(e);
       }
