@@ -35,6 +35,10 @@ export default class UpdateExampleRequest extends Request {
       throw new HttpException(400, 'date is not valid');
     }
 
+    if (!req.body.avatar) {
+      throw new HttpException(400, 'avatar not found in body');
+    }
+
     return true;
   }
 }
