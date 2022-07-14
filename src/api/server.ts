@@ -7,6 +7,8 @@ import customExpress, { CustomExpress } from '../lib/customExpress/customExpress
 import { logger } from '../logger/logger';
 import accessLogger from './mdw/accessLogger';
 import errorHandler from './mdw/errorHandler';
+import methodNotAllowed from './mdw/methodNotAllowed';
+import notFound from './mdw/notFound';
 import requestUuid from './mdw/requestUuid';
 import exampleRoutes from './routes/example.routes';
 import healthRoutes from './routes/health.routes';
@@ -33,6 +35,8 @@ export default class Server {
     this.app.use(requestUuid);
     this.app.use(accessLogger);
     this.initRoutes();
+    this.app.use(methodNotAllowed(this.app));
+    this.app.use(notFound);
     this.app.use(errorHandler);
   }
 
