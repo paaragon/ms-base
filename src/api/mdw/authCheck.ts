@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { UnauthorizedException } from '../../exceptions/HttpException';
-import BasicAuthCheck from './basicAuthCheck';
+import { UnauthorizedException } from '../exceptions/HttpException';
+import BasicAuthCheck from './authCheckTypes/basicAuthCheck';
 
 const check = new BasicAuthCheck();
 
