@@ -1,7 +1,7 @@
 import config from 'config';
 import { DataSource } from 'typeorm';
 import { ConfigLogI, ConfigSQLiteI } from '../config';
-import TypeOrmLogger from '../lib/typeormlogger/TypeOrmLogger';
+import TypeOrmLogger from './TypeOrmLogger';
 
 const dbConfig = config.get<ConfigSQLiteI>('db');
 const logConfig = config.get<ConfigLogI>('log');

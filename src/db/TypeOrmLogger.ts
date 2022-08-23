@@ -1,5 +1,5 @@
 import { Logger, QueryRunner } from 'typeorm';
-import { logger } from '../../logger/logger';
+import { logger } from '../logger/logger';
 
 export default class TypeOrmLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {

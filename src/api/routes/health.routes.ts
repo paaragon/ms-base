@@ -1,5 +1,5 @@
-import customExpress from '../../lib/customExpress/customExpress';
 import healthCtrl from '../controllers/health.ctrl';
+import customExpress from '../lib/customExpress/customExpress';
 
 const app = customExpress();
 
