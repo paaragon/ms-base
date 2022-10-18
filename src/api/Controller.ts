@@ -13,7 +13,8 @@ export default class Controller {
       try {
         const controllerRequest: T = new reqTypePrototype();
         if (!controllerRequest.validate(req)) {
-          throw new HttpException(400, 'Bad request');
+          next(new HttpException(400, 'Bad request'));
+          return;
         }
         next();
       } catch (e) {
@@ -25,7 +26,7 @@ export default class Controller {
   public static run<T extends Request, S extends Response>(method: (req: T) => Promise<S>) {
     return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
       try {
-        const reqPromises: Promise<any>[] = [method(req as any)]
+        const reqPromises: Promise<any>[] = [method(req as any)];
 
         if (timeout) {
           const timeoutPromise = new Promise((resolve, reject) => {

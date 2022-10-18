@@ -2,7 +2,7 @@
     "api": {
         "version": 1,
         "port": 3001,
-        "timeout": 5000
+        "timeout": 1000
     },
     "db": {
         "queryAlertTime": 1000

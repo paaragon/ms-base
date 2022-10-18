@@ -4,6 +4,9 @@ import AbstractCheck from './abstractCheck';
 
 export default class BasicAuthCheck implements AbstractCheck {
   async validate(basicToken: string): Promise<boolean> {
+    if (!basicToken) {
+      return false;
+    }
     const [user, pass] = this.getUserPass(basicToken);
 
     if (!this.validateAuth(user, pass)) {

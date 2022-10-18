@@ -1,6 +1,6 @@
-import { AppDataSource } from '../db/db-connector';
-import ExampleDB from '../db/entities/example.db';
-import Example from '../models/example.model';
+import Example from '../../models/example.model';
+import { AppDataSource } from '../db-connector';
+import ExampleDB from '../entities/example.db';
 
 export default {
   async getExample(id: number): Promise<Example> {

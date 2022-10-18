@@ -1,5 +1,5 @@
+import exampleRepo from '../../db/repository/example.repo';
 import Example from '../../models/example.model';
-import exampleRepo from '../../repository/example.repo';
 import UpdateExampleRequest from '../schema/UpdateExampleRequest';
 import UpdateExampleResponse from '../schema/UpdateExampleResponse';
 
@@ -26,6 +26,8 @@ export default class ExampleController {
         res(true);
       }, 10000);
     });
+
+    console.log('Esto se ejecuta después del timeout');
 
     return {
       error: false,
