@@ -11,12 +11,10 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint --fix 'src/**/*.ts'",
-    "preversion": "npm run lint && npm run test",
-    "version": "git add -A src",
-    "postversion": "git push && git push --tags && npm run cr:build && npm run cr:deploy",
+    "postversion": "git push && git push --tags && npm run cr:build && npm run cr:publish",
     "docker:build": "docker build -t ${npm_package_name}:${npm_package_version} .",
-    "predocker:deploy": "docker tag ${npm_package_name}:${npm_package_version} de.icr.io/lp-realtime-monitor/${npm_package_name}:${npm_package_version}",
-    "docker:deploy": "docker push de.icr.io/lp-realtime-monitor/${npm_package_name}:${npm_package_version}"
+    "predocker:publish": "docker tag ${npm_package_name}:${npm_package_version} de.icr.io/lp-realtime-monitor/${npm_package_name}:${npm_package_version}",
+    "docker:publish": "docker push de.icr.io/lp-realtime-monitor/${npm_package_name}:${npm_package_version}"
   },
   "author": "Pablo Aragón Moreno <pablo.aragon22@gmail.com>",
   "license": "ISC",
